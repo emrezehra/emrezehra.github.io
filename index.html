@@ -179,7 +179,7 @@ env.addEventListener('click',openLetter);env.addEventListener('keydown',e=>{if(e
 document.getElementById('surprise').addEventListener('click',()=>{document.getElementById('finalMessage').classList.add('show');for(let i=0;i<24;i++){const h=document.createElement('span');h.textContent=['♥','♡','💗'][i%3];h.className='heart';h.style.left=Math.random()*100+'vw';h.style.animationDuration=(5+Math.random()*5)+'s';h.style.fontSize=(16+Math.random()*24)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),10000)}});
 setInterval(()=>{const h=document.createElement('span');h.textContent=Math.random()>.5?'♡':'♥';h.className='heart';h.style.left=Math.random()*100+'vw';h.style.animationDuration=(7+Math.random()*6)+'s';h.style.fontSize=(12+Math.random()*20)+'px';document.querySelector('.hero').appendChild(h);setTimeout(()=>h.remove(),13000)},850);
 
-// Mini game: Koca Kafa Uçuşta
+// Mini game: Koca Kafa Uçuşta — kolay mod + 10 puan sürprizi
 (()=>{
  const canvas=document.getElementById('flappyCanvas');
  if(!canvas) return;
@@ -192,26 +192,27 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
  const hintEl=document.getElementById('flappyHint');
  const startBtn=document.getElementById('flappyStart');
  const restartBtn=document.getElementById('flappyRestart');
- let state='ready',y=245,vy=0,score=0,best=0,frames=0,pipes=[],raf=0;
- const gravity=.38,flap=-7.1,headR=25,pipeW=62,gap=158;
+ let state='ready',y=245,vy=0,score=0,frames=0,pipes=[],raf=0,particles=[];
+ const gravity=.19,flap=-4.9,headW=68,headH=96,pipeW=62,gap=214;
  function reset(){
-   cancelAnimationFrame(raf);y=245;vy=0;score=0;frames=0;pipes=[];state='ready';
+   cancelAnimationFrame(raf);y=245;vy=0;score=0;frames=0;pipes=[];particles=[];state='ready';
    scoreEl.textContent='0';titleEl.textContent='Hazır mısın Zehra?';
-   hintEl.textContent="Emre'nin koca kafasını uçur ve kalpli engellerden kaçır!";
-   startBtn.textContent='OYUNA BAŞLA ♥';overlay.classList.remove('hidden');draw(); 
+   hintEl.textContent="Bu kez kolay mod! Dokun veya boşluk tuşuna bas, Emre'yi uçur.";
+   startBtn.textContent='OYUNA BAŞLA ♥';overlay.classList.remove('hidden');draw();
  }
  function start(){
-   if(state==='over') reset();
-   if(state==='ready'){state='playing';overlay.classList.add('hidden');vy=flap;loop();}
+   if(state==='over'||state==='won') reset();
+   if(state==='ready'){state='playing';overlay.classList.add('hidden');vy=-3.8;loop();}
  }
  function jump(){
    if(state==='ready'){start();return;}
    if(state==='playing')vy=flap;
-   else if(state==='over')reset();
+   else if(state==='over'||state==='won')reset();
  }
  function addPipe(){
-   const top=75+Math.random()*180;
-   pipes.push({x:W+8,top:top,passed:false});
+   // Wide opening with generous vertical clearance.
+   const top=62+Math.random()*145;
+   pipes.push({x:W+8,top,passed:false});
  }
  function roundedRect(x,y,w,h,r,fill){
    ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();
@@ -220,13 +221,29 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
    ctx.save();ctx.translate(x,y);ctx.scale(size/20,size/20);ctx.fillStyle=color;
    ctx.beginPath();ctx.moveTo(0,7);ctx.bezierCurveTo(-22,-7,-12,-20,0,-9);ctx.bezierCurveTo(12,-20,22,-7,0,7);ctx.fill();ctx.restore();
  }
+ function fireworks(){
+   for(let i=0;i<5;i++){
+     const x=35+Math.random()*290,y0=45+Math.random()*230;
+     const colors=['#ff6fae','#ffd166','#9b8cff','#70d6ff','#ff8fab'];
+     for(let j=0;j<18;j++){
+       const a=Math.PI*2*j/18,sp=1.1+Math.random()*2.6;
+       particles.push({x,y:y0,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:45+Math.random()*25,color:colors[i%colors.length],r:2+Math.random()*2});
+     }
+   }
+ }
+ function drawParticles(){
+   particles.forEach(q=>{
+     ctx.globalAlpha=Math.max(0,q.life/65);
+     ctx.fillStyle=q.color;ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,Math.PI*2);ctx.fill();
+     q.x+=q.vx;q.y+=q.vy;q.vy+=.035;q.life--;
+   });
+   ctx.globalAlpha=1;
+   particles=particles.filter(q=>q.life>0);
+ }
  function draw(){
    const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#9edbfa');sky.addColorStop(1,'#fff0f5');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
-   // soft clouds
-   for(let i=0;i<5;i++){let cx=((i*103+frames*.22)%(W+90))-40,cy=75+(i%3)*68;ctx.fillStyle='#ffffffaa';ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.arc(cx+20,cy-8,23,0,Math.PI*2);ctx.arc(cx+43,cy,16,0,Math.PI*2);ctx.fill();}
-   // distant hills
+   for(let i=0;i<5;i++){let cx=((i*103+frames*.12)%(W+90))-40,cy=75+(i%3)*68;ctx.fillStyle='#ffffffaa';ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.arc(cx+20,cy-8,23,0,Math.PI*2);ctx.arc(cx+43,cy,16,0,Math.PI*2);ctx.fill();}
    ctx.fillStyle='#c5e9d5';ctx.beginPath();ctx.moveTo(0,H-48);ctx.quadraticCurveTo(75,H-115,155,H-48);ctx.quadraticCurveTo(260,H-125,360,H-48);ctx.lineTo(360,H);ctx.lineTo(0,H);ctx.fill();
-   // pipes / heart gates
    pipes.forEach(p=>{
      const bottomY=p.top+gap;
      roundedRect(p.x,0,pipeW,p.top-17,12,'#df7fa5');
@@ -236,44 +253,62 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
      drawHeart(p.x+pipeW/2,p.top-50,19,'#fff2f7');
      drawHeart(p.x+pipeW/2,bottomY+49,19,'#fff2f7');
    });
-   // ground
    ctx.fillStyle='#f5c7d7';ctx.fillRect(0,H-17,W,17);
    ctx.fillStyle='#fff5f8';for(let x=0;x<W;x+=24)drawHeart(x+8,H-9,8,'#e9a4bc');
-   // player halo + head photo
-   const headW=68,headH=96;
    ctx.save();ctx.shadowColor='#a84670aa';ctx.shadowBlur=16;
    ctx.beginPath();ctx.ellipse(playerX,y,headW/2+5,headH/2+5,0,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();ctx.restore();
    if(head.complete&&head.naturalWidth){ctx.save();ctx.beginPath();ctx.ellipse(playerX,y,headW/2,headH/2,0,0,Math.PI*2);ctx.clip();ctx.drawImage(head,playerX-headW/2,y-headH/2,headW,headH);ctx.restore();}
    else{ctx.beginPath();ctx.ellipse(playerX,y,headW/2,headH/2,0,0,Math.PI*2);ctx.fillStyle='#d98aa8';ctx.fill();}
    ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(playerX,y,headW/2+2,headH/2+2,0,0,Math.PI*2);ctx.stroke();
-   // tiny flutter hearts
    drawHeart(playerX+38,y-43,15,'#ef82aa');
+   if(state==='won')drawParticles();
  }
  function hit(){
-   const cx=playerX,cy=y,r=headR-4;
-   if(cy-r<0||cy+r>H-18)return true;
-   return pipes.some(p=>cx+r>p.x-3&&cx-r<p.x+pipeW+3&&(cy-r<p.top||cy+r>p.top+gap));
+   const rx=headW*.34,ry=headH*.39,cx=playerX,cy=y;
+   if(cy-ry<0||cy+ry>H-17)return true;
+   return pipes.some(p=>cx+rx>p.x-2&&cx-rx<p.x+pipeW+2&&(cy-ry<p.top||cy+ry>p.top+gap));
  }
  function end(){
    state='over';cancelAnimationFrame(raf);
    titleEl.textContent='Ayyy, koca kafa çarptı! 😅';
-   hintEl.textContent='Skorun: '+score+' · Bir tur daha dene, Zehra için rekor kır!';
+   hintEl.textContent='Skorun: '+score+' · Tekrar dene, bu mod artık çok daha kolay!';
    startBtn.textContent='TEKRAR OYNA ♥';overlay.classList.remove('hidden');
+ }
+ function win(){
+   state='won';cancelAnimationFrame(raf);fireworks();
+   titleEl.textContent='10 PUAN! SÜRPRİİİZ! 🎆💗';
+   hintEl.textContent='Zehra, Emre seni çok seviyor! Bu oyunun ödülü kocaman bir öpücük ve sonsuz sarılma. ❤️';
+   startBtn.textContent='BİR DAHA OYNA ♥';overlay.classList.remove('hidden');
+   const celebrate=()=>{
+     if(state!=='won')return;
+     draw();if(particles.length<55)fireworks();
+     raf=requestAnimationFrame(celebrate);
+   };
+   celebrate();
  }
  function loop(){
    if(state!=='playing')return;
    frames++;vy+=gravity;y+=vy;
-   if(frames%92===0)addPipe();
-   pipes.forEach(p=>{p.x-=2.35;if(!p.passed&&p.x+pipeW<playerX){p.passed=true;score++;scoreEl.textContent=score;}});
+   if(frames%132===0)addPipe();
+   pipes.forEach(p=>{
+     p.x-=1.55;
+     if(!p.passed&&p.x+pipeW<playerX){
+       p.passed=true;score++;scoreEl.textContent=score;
+       if(score>=10){win();return;}
+     }
+   });
+   if(state!=='playing')return;
    pipes=pipes.filter(p=>p.x>-pipeW-10);
    draw();
    if(hit()){end();return;}
    raf=requestAnimationFrame(loop);
  }
  canvas.addEventListener('pointerdown',e=>{e.preventDefault();jump();});
- startBtn.addEventListener('click',()=>{if(state==='over')reset();start();});
+ startBtn.addEventListener('click',()=>{if(state==='over'||state==='won')reset();start();});
  restartBtn.addEventListener('click',reset);
- document.addEventListener('keydown',e=>{if((e.code==='Space'||e.code==='ArrowUp')&&document.activeElement!==startBtn){e.preventDefault();jump();}});
+ document.addEventListener('keydown',e=>{
+   if((e.code==='Space'||e.code==='ArrowUp')&&state!=='ready'&&document.activeElement!==startBtn){e.preventDefault();jump();}
+ });
  head.onload=draw;
  reset();
 })();
