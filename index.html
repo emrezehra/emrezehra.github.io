@@ -91,16 +91,16 @@ audio{width:min(340px,90%);margin:18px auto}
 <div class="eyebrow">Kalbimde sakladığım kareler</div><h2>Bizden hatıralar ♡</h2>
 <p>Her fotoğrafta başka bir an, her anıda biraz daha biz varız.</p>
 <div class="memory-gallery">
-<figure class="memory-photo"><img src="foto-01.jpg" alt="Emre ve Zehra — anı 1" loading="lazy"><figcaption>Birlikte en güzel hâlimiz ♡</figcaption></figure>
-<figure class="memory-photo"><img src="foto-02.jpg" alt="Emre ve Zehra — anı 2" loading="lazy"><figcaption>Gün batımına karışan anımız</figcaption></figure>
-<figure class="memory-photo"><img src="foto-03.jpg" alt="Emre ve Zehra — anı 3" loading="lazy"><figcaption>En sevdiğim öpücük</figcaption></figure>
-<figure class="memory-photo"><img src="foto-04.jpg" alt="Emre ve Zehra — anı 4" loading="lazy"><figcaption>Mesafeler olsa da elim hep sende</figcaption></figure>
-<figure class="memory-photo"><img src="foto-05.jpg" alt="Emre ve Zehra — anı 5" loading="lazy"><figcaption>Sana çiçeklerle gelen mutluluk</figcaption></figure>
-<figure class="memory-photo"><img src="foto-06.jpg" alt="Emre ve Zehra — anı 6" loading="lazy"><figcaption>Yan yana olduğumuz her kare güzel</figcaption></figure>
-<figure class="memory-photo"><img src="foto-07.jpg" alt="Emre ve Zehra — anı 7" loading="lazy"><figcaption>Sana hazırladığım küçük sürpriz</figcaption></figure>
-<figure class="memory-photo"><img src="foto-08.jpg" alt="Emre ve Zehra — anı 8" loading="lazy"><figcaption>Aynada yakaladığımız bir an</figcaption></figure>
-<figure class="memory-photo"><img src="foto-09.jpg" alt="Emre ve Zehra — anı 9" loading="lazy"><figcaption>En yakın olduğum yer: yanın</figcaption></figure>
-<figure class="memory-photo"><img src="foto-10.jpg" alt="Emre ve Zehra — anı 10" loading="lazy"><figcaption>Birlikte keşfettiğimiz güzellikler</figcaption></figure>
+<figure class="memory-photo"><img src="foto-01.jpg?v=5" alt="Emre ve Zehra — anı 1" loading="eager" decoding="async"><figcaption>Birlikte en güzel hâlimiz ♡</figcaption></figure>
+<figure class="memory-photo"><img src="foto-02.jpg?v=5" alt="Emre ve Zehra — anı 2" loading="eager" decoding="async"><figcaption>Gün batımına karışan anımız</figcaption></figure>
+<figure class="memory-photo"><img src="foto-03.jpg?v=5" alt="Emre ve Zehra — anı 3" loading="eager" decoding="async"><figcaption>En sevdiğim öpücük</figcaption></figure>
+<figure class="memory-photo"><img src="foto-04.jpg?v=5" alt="Emre ve Zehra — anı 4" loading="eager" decoding="async"><figcaption>Mesafeler olsa da elim hep sende</figcaption></figure>
+<figure class="memory-photo"><img src="foto-05.jpg?v=5" alt="Emre ve Zehra — anı 5" loading="eager" decoding="async"><figcaption>Sana çiçeklerle gelen mutluluk</figcaption></figure>
+<figure class="memory-photo"><img src="foto-06.jpg?v=5" alt="Emre ve Zehra — anı 6" loading="eager" decoding="async"><figcaption>Yan yana olduğumuz her kare güzel</figcaption></figure>
+<figure class="memory-photo"><img src="foto-07.jpg?v=5" alt="Emre ve Zehra — anı 7" loading="eager" decoding="async"><figcaption>Sana hazırladığım küçük sürpriz</figcaption></figure>
+<figure class="memory-photo"><img src="foto-08.jpg?v=5" alt="Emre ve Zehra — anı 8" loading="eager" decoding="async"><figcaption>Aynada yakaladığımız bir an</figcaption></figure>
+<figure class="memory-photo"><img src="foto-09.jpg?v=5" alt="Emre ve Zehra — anı 9" loading="eager" decoding="async"><figcaption>En yakın olduğum yer: yanın</figcaption></figure>
+<figure class="memory-photo"><img src="foto-10.jpg?v=5" alt="Emre ve Zehra — anı 10" loading="eager" decoding="async"><figcaption>Birlikte keşfettiğimiz güzellikler</figcaption></figure>
 </div>
 </section>
 
@@ -179,30 +179,30 @@ env.addEventListener('click',openLetter);env.addEventListener('keydown',e=>{if(e
 document.getElementById('surprise').addEventListener('click',()=>{document.getElementById('finalMessage').classList.add('show');for(let i=0;i<24;i++){const h=document.createElement('span');h.textContent=['♥','♡','💗'][i%3];h.className='heart';h.style.left=Math.random()*100+'vw';h.style.animationDuration=(5+Math.random()*5)+'s';h.style.fontSize=(16+Math.random()*24)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),10000)}});
 setInterval(()=>{const h=document.createElement('span');h.textContent=Math.random()>.5?'♡':'♥';h.className='heart';h.style.left=Math.random()*100+'vw';h.style.animationDuration=(7+Math.random()*6)+'s';h.style.fontSize=(12+Math.random()*20)+'px';document.querySelector('.hero').appendChild(h);setTimeout(()=>h.remove(),13000)},850);
 
-// Mini game: Koca Kafa Uçuşta — kolay mod + 10 puan sürprizi
+// Mini game: Koca Kafa Uçuşta — ÇOK KOLAY MOD + 10 puan sürprizi
 (()=>{
  const canvas=document.getElementById('flappyCanvas');
  if(!canvas) return;
  const ctx=canvas.getContext('2d');
  const W=360,H=520,playerX=88,head=new Image();
- head.src='emre-kafa.png';
+ head.src='emre-kafa.png?v=5';
  const overlay=document.getElementById('flappyOverlay');
  const scoreEl=document.getElementById('flappyScore');
  const titleEl=document.getElementById('flappyTitle');
  const hintEl=document.getElementById('flappyHint');
  const startBtn=document.getElementById('flappyStart');
  const restartBtn=document.getElementById('flappyRestart');
- let state='ready',y=245,vy=0,score=0,frames=0,pipes=[],raf=0,particles=[];
- const gravity=.19,flap=-4.9,headW=68,headH=96,pipeW=62,gap=214;
+ let state='ready',y=260,vy=0,score=0,frames=0,pipes=[],raf=0,particles=[];
+ const gravity=.105,flap=-3.15,headW=68,headH=96,pipeW=62,gap=270;
  function reset(){
-   cancelAnimationFrame(raf);y=245;vy=0;score=0;frames=0;pipes=[];particles=[];state='ready';
+   cancelAnimationFrame(raf);y=260;vy=0;score=0;frames=0;pipes=[];particles=[];state='ready';
    scoreEl.textContent='0';titleEl.textContent='Hazır mısın Zehra?';
-   hintEl.textContent="Bu kez kolay mod! Dokun veya boşluk tuşuna bas, Emre'yi uçur.";
+   hintEl.textContent="ÇOK KOLAY MOD 💗 Dokun veya boşluk tuşuna bas. Koca kafa artık kolay kolay düşmez!";
    startBtn.textContent='OYUNA BAŞLA ♥';overlay.classList.remove('hidden');draw();
  }
  function start(){
-   if(state==='over'||state==='won') reset();
-   if(state==='ready'){state='playing';overlay.classList.add('hidden');vy=-3.8;loop();}
+   if(state==='over'||state==='won')reset();
+   if(state==='ready'){state='playing';overlay.classList.add('hidden');vy=-1.2;loop();}
  }
  function jump(){
    if(state==='ready'){start();return;}
@@ -210,8 +210,8 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
    else if(state==='over'||state==='won')reset();
  }
  function addPipe(){
-   // Wide opening with generous vertical clearance.
-   const top=62+Math.random()*145;
+   // Opening is intentionally very wide and centered around the flight path.
+   const top=65+Math.random()*85;
    pipes.push({x:W+8,top,passed:false});
  }
  function roundedRect(x,y,w,h,r,fill){
@@ -222,27 +222,22 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
    ctx.beginPath();ctx.moveTo(0,7);ctx.bezierCurveTo(-22,-7,-12,-20,0,-9);ctx.bezierCurveTo(12,-20,22,-7,0,7);ctx.fill();ctx.restore();
  }
  function fireworks(){
-   for(let i=0;i<5;i++){
-     const x=35+Math.random()*290,y0=45+Math.random()*230;
-     const colors=['#ff6fae','#ffd166','#9b8cff','#70d6ff','#ff8fab'];
-     for(let j=0;j<18;j++){
-       const a=Math.PI*2*j/18,sp=1.1+Math.random()*2.6;
-       particles.push({x,y:y0,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:45+Math.random()*25,color:colors[i%colors.length],r:2+Math.random()*2});
+   const colors=['#ff6fae','#ffd166','#9b8cff','#70d6ff','#ff8fab'];
+   for(let i=0;i<6;i++){
+     const x=25+Math.random()*310, yy=35+Math.random()*260;
+     for(let j=0;j<20;j++){
+       const a=Math.PI*2*j/20,sp=1+Math.random()*2.3;
+       particles.push({x,y:yy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:55,color:colors[i%colors.length],r:2+Math.random()*2});
      }
    }
  }
  function drawParticles(){
-   particles.forEach(q=>{
-     ctx.globalAlpha=Math.max(0,q.life/65);
-     ctx.fillStyle=q.color;ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,Math.PI*2);ctx.fill();
-     q.x+=q.vx;q.y+=q.vy;q.vy+=.035;q.life--;
-   });
-   ctx.globalAlpha=1;
-   particles=particles.filter(q=>q.life>0);
+   particles.forEach(q=>{ctx.globalAlpha=Math.max(0,q.life/55);ctx.fillStyle=q.color;ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,Math.PI*2);ctx.fill();q.x+=q.vx;q.y+=q.vy;q.vy+=.025;q.life--;});
+   ctx.globalAlpha=1;particles=particles.filter(q=>q.life>0);
  }
  function draw(){
    const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#9edbfa');sky.addColorStop(1,'#fff0f5');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
-   for(let i=0;i<5;i++){let cx=((i*103+frames*.12)%(W+90))-40,cy=75+(i%3)*68;ctx.fillStyle='#ffffffaa';ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.arc(cx+20,cy-8,23,0,Math.PI*2);ctx.arc(cx+43,cy,16,0,Math.PI*2);ctx.fill();}
+   for(let i=0;i<5;i++){let cx=((i*103+frames*.08)%(W+90))-40,cy=75+(i%3)*68;ctx.fillStyle='#ffffffaa';ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);ctx.arc(cx+20,cy-8,23,0,Math.PI*2);ctx.arc(cx+43,cy,16,0,Math.PI*2);ctx.fill();}
    ctx.fillStyle='#c5e9d5';ctx.beginPath();ctx.moveTo(0,H-48);ctx.quadraticCurveTo(75,H-115,155,H-48);ctx.quadraticCurveTo(260,H-125,360,H-48);ctx.lineTo(360,H);ctx.lineTo(0,H);ctx.fill();
    pipes.forEach(p=>{
      const bottomY=p.top+gap;
@@ -264,38 +259,36 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
    if(state==='won')drawParticles();
  }
  function hit(){
-   const rx=headW*.34,ry=headH*.39,cx=playerX,cy=y;
-   if(cy-ry<0||cy+ry>H-17)return true;
-   return pipes.some(p=>cx+rx>p.x-2&&cx-rx<p.x+pipeW+2&&(cy-ry<p.top||cy+ry>p.top+gap));
+   // Extra-forgiving hitbox; the head's visible outline is larger than the collision area.
+   const rx=19,ry=25,cx=playerX,cy=y;
+   if(cy-ry<12||cy+ry>H-28)return true;
+   return pipes.some(p=>cx+rx>p.x+5&&cx-rx<p.x+pipeW-5&&(cy-ry<p.top-7||cy+ry>p.top+p.gap+7));
  }
  function end(){
    state='over';cancelAnimationFrame(raf);
-   titleEl.textContent='Ayyy, koca kafa çarptı! 😅';
-   hintEl.textContent='Skorun: '+score+' · Tekrar dene, bu mod artık çok daha kolay!';
+   titleEl.textContent='Biraz çarptık galiba 😄';
+   hintEl.textContent='Skorun: '+score+' · Tekrar dene! Bu en kolay mod.';
    startBtn.textContent='TEKRAR OYNA ♥';overlay.classList.remove('hidden');
  }
  function win(){
    state='won';cancelAnimationFrame(raf);fireworks();
    titleEl.textContent='10 PUAN! SÜRPRİİİZ! 🎆💗';
-   hintEl.textContent='Zehra, Emre seni çok seviyor! Bu oyunun ödülü kocaman bir öpücük ve sonsuz sarılma. ❤️';
+   hintEl.textContent='Zehra, Emre seni çok seviyor! Ödülün: kocaman bir öpücük ve sonsuz sarılma. ❤️';
    startBtn.textContent='BİR DAHA OYNA ♥';overlay.classList.remove('hidden');
-   const celebrate=()=>{
-     if(state!=='won')return;
-     draw();if(particles.length<55)fireworks();
-     raf=requestAnimationFrame(celebrate);
-   };
+   const celebrate=()=>{if(state!=='won')return;draw();if(particles.length<65)fireworks();raf=requestAnimationFrame(celebrate);};
    celebrate();
  }
  function loop(){
    if(state!=='playing')return;
-   frames++;vy+=gravity;y+=vy;
-   if(frames%132===0)addPipe();
+   frames++;
+   vy+=gravity;y+=vy;
+   // Gentle ceiling/floor assistance: no instant crash from a missed tap.
+   if(y<75){y=75;vy=.25;}
+   if(y>445){y=445;vy=-.65;}
+   if(frames%185===0)addPipe();
    pipes.forEach(p=>{
-     p.x-=1.55;
-     if(!p.passed&&p.x+pipeW<playerX){
-       p.passed=true;score++;scoreEl.textContent=score;
-       if(score>=10){win();return;}
-     }
+     p.x-=1.05;
+     if(!p.passed&&p.x+pipeW<playerX){p.passed=true;score++;scoreEl.textContent=score;if(score>=10){win();return;}}
    });
    if(state!=='playing')return;
    pipes=pipes.filter(p=>p.x>-pipeW-10);
@@ -306,11 +299,28 @@ setInterval(()=>{const h=document.createElement('span');h.textContent=Math.rando
  canvas.addEventListener('pointerdown',e=>{e.preventDefault();jump();});
  startBtn.addEventListener('click',()=>{if(state==='over'||state==='won')reset();start();});
  restartBtn.addEventListener('click',reset);
- document.addEventListener('keydown',e=>{
-   if((e.code==='Space'||e.code==='ArrowUp')&&state!=='ready'&&document.activeElement!==startBtn){e.preventDefault();jump();}
- });
+ document.addEventListener('keydown',e=>{if((e.code==='Space'||e.code==='ArrowUp')&&state==='playing'){e.preventDefault();jump();}});
  head.onload=draw;
  reset();
+})();
+</script>
+<script>
+
+// Galeri görsellerini ilk açılışta önceden yükle; F5 ihtiyacını azalt.
+(()=>{
+ const galleryImages=[...document.querySelectorAll('.memory-gallery img')];
+ galleryImages.forEach((img)=>{
+   img.loading='eager';
+   img.decoding='async';
+   img.fetchPriority='high';
+   const retry=()=>{
+     if(img.dataset.retried==='1') return;
+     img.dataset.retried='1';
+     const clean=img.getAttribute('src').split('?')[0];
+     img.src=clean+'?v=5&retry=1';
+   };
+   img.addEventListener('error',retry,{once:true});
+ });
 })();
 
 </script>
